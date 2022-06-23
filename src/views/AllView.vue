@@ -1,18 +1,18 @@
 <template>
-  <Description />
+  <TodoList />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 
 // Components
-import Description from '../components/Description.vue';
+import TodoList from '../components/TodoList.vue';
 
 export default defineComponent({
-  name: 'HomeView',
+  name: 'AllView',
 
   components: {
-    Description,
+    TodoList,
   },
 });
 </script>

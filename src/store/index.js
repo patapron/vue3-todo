@@ -2,57 +2,47 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    characters: [],
-    character: {},
-    cart: {},
+    todos: [],
+    // character: {},
+    // cart: {},
   },
   getters: {},
   mutations: {
-    setCharacters(state, payload) {
-      state.characters = payload;
+    setTodos(state, payload) {
+      state.todos = payload;
     },
-    setCharacter(state, payload) {
-      state.character = payload;
-    },
-    setChariD(state, payload) {
-      state.charId = payload;
-    },
-    setCart(state, payload) {
-      state.cart[payload.id] = payload;
-    },
+    // setCharacter(state, payload) {
+    //   state.character = payload;
+    // },
+    // setChariD(state, payload) {
+    //   state.charId = payload;
+    // },
+    // setCart(state, payload) {
+    //   state.cart[payload.id] = payload;
+    // },
   },
   actions: {
-    getCharacters: (state) => {
+    getTodos: (state) => {
       fetch(`https://rickandmortyapi.com/api/character`)
         .then((res) => {
           return res.json();
         })
         .then((response) => {
-          response.results.forEach((element) => {
-            element.units = 0;
-            element.price = 10;
-          });
-          state.commit("setCharacters", response.results);
+          state.commit("setTodos", response);
         });
     },
 
-    getCharacter: (state, payload) => {
-      fetch(`https://rickandmortyapi.com/api/character/${payload}`)
-        .then((res) => {
-          return res.json();
-        })
-        .then((response) => {
-          response.units = 0;
-          response.price = 10;
-          state.commit("setCharacter", response);
-        });
-    },
-    addToCart({ commit, state }, character) {
-      character.units = state.cart.hasOwnProperty(character.id)
-        ? state.cart[character.id].units + 1
-        : 1;
-      commit("setCart", character);
-    },
+    // getCharacter: (state, payload) => {
+    //   fetch(`https://rickandmortyapi.com/api/character/${payload}`)
+    //     .then((res) => {
+    //       return res.json();
+    //     })
+    //     .then((response) => {
+    //       response.units = 0;
+    //       response.price = 10;
+    //       state.commit("setCharacter", response);
+    //     });
+    // },
 
     // async init ({commit}) {
     //   const response = await fetch('https://rickandmortyapi.com/api/character')

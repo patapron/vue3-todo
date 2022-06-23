@@ -1,47 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import CharactersView from '../views/CharactersView.vue'
-import CharacterView from '../views/CharacterView.vue'
-import LocationsView from '../views/LocationsView.vue'
-import EpisodesView from '../views/EpisodesView.vue'
+import AllView from '../views/AllView'
+import ActiveView from '../views/ActiveView'
+import CompletedView from '../views/CompletedView'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'all',
+    component: AllView
   },
   {
-    path: '/characters',
-    name: 'characters',
-    component: CharactersView
+    path: '/all',
+    name: 'all',
+    component: AllView
   },
   {
-    path: '/character/:id',
-    name: 'character',
-    component: CharacterView,
+    path: '/active',
+    name: 'active',
+    component: ActiveView
+  },
+  {
+    path: '/completed',
+    name: 'completed',
+    component: CompletedView,
     props: true    
   },
-  // {
-  //   path: '/locations',
-  //   name: 'locations',
-  //   component: LocationsView
-  // },
-  // {
-  //   path: '/locate',
-  //   name: 'locate',
-  //   component: LocateView
-  // },
-  // {
-  //   path: '/episodes',
-  //   name: 'episodes',
-  //   component: EpisodesView
-  // },
-  // {
-  //   path: '/episode',
-  //   name: 'episode',
-  //   component: EpisodeView
-  // }
 ]
 
 const router = createRouter({
