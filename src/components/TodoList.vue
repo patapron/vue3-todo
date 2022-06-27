@@ -1,78 +1,81 @@
 <template>
   <v-card class="mx-auto" width="300">
-    <v-list v-model:opened="open">
-      <template v-for="(group, i) in all" :key="i">
-        <!-- <template v-if="!item.list">
-          <v-list-item
-            append-icon="mdi-close"
-            :title="item.name"
-            :value="item.name"
-          ></v-list-item>
-        </template> -->
-
-        <v-list-group>
-          <template v-slot:activator="{ props }">
-            <v-list-item
-              v-bind="props"
-              :title="group.name"
-              :value="group.name"
-            ></v-list-item>
-          </template>
-          <v-list-item v-for="(element, j) in group.list" :key="j">
-            <template v-slot:append>
-              <v-container fluid class="pa-0 d-flex justify-space-between">
-                <v-checkbox-btn v-model="element.completed"></v-checkbox-btn>
-                <v-text-field
-                  label="Include files"
-                  hide-details
-                  :value="element.name"
-                ></v-text-field>
-                <v-list-item-avatar end>
-                  <v-btn
-                    variant="text"
-                    color="grey lighten-1"
-                    icon="mdi-close"
-                  ></v-btn>
-                </v-list-item-avatar>
-              </v-container>
-
-              <!-- <v-checkbox-btn v-model="element.completed"></v-checkbox-btn>
-              {{ element.name }} -->
-            </template>
-          </v-list-item>
-        </v-list-group>
-      </template>
+    <v-text-field
+      label="New todo"
+      hide-details
+      v-model="newTodoName"
+      v-on:keyup.enter="addNewTodo"
+    ></v-text-field>
+    <v-list>
+      <!-- active -->
+      <List
+        v-if="name1"
+        :list="getCompleted(false)"
+        :name="props.name1"
+        @change-event="changeTodo"
+      ></List>
+      <!-- completed -->
+      <List
+        v-if="name2"
+        :list="getCompleted(true)"
+        :name="props.name2"
+        @change-event="changeTodo"
+      ></List>
     </v-list>
   </v-card>
 </template>
 
 <script>
-export default {
+import { useStore } from "vuex";
+import { computed, ref, defineComponent, provide } from "vue";
+
+import List from "../components/List.vue";
+import mitt from "mitt";
+
+export default defineComponent({
   name: "TodoList",
-  setup() {
-
-    const prueba= true;
-    const all = [
-      {
-        name: "completed",
-        list: [
-          { name: "item1", completed: true },
-          { name: "item3", completed: true },
-          { name: "item4", completed: true },
-        ],
-      },
-      {
-        name: "active",
-        list: [
-          { name: "item2", completed: false },
-          { name: "item3", completed: false },
-          { name: "item5", completed: false },
-        ],
-      },
-    ];
-
-    return { all, prueba };
+  components: {
+    List,
   },
-};
-</script>
+  props: {
+    filterValue: {
+      type: Boolean,
+      default: false,
+    },
+    name1: String,
+    name2: String,
+  },
+  setup(props) {
+    const store = useStore();
+    const all = computed(() => store.state.todos);
+    const getCompleted = computed(() => store.getters.getCompleted);
+    const newTodoName = ref("");
+    const bus = mitt();
+    bus.on("delete-event", (evt) => {
+      store.dispatch("deleteTodo", evt);
+    });
+    bus.on("change-event", (evt) => {
+      store.dispatch("changeTodo", e);
+    });
+    provide("bus", bus);
 
+    function addNewTodo(e) {
+      let newTodo = { id: null, name: newTodoName.value, completed: false };
+      store.dispatch("addTodo", newTodo);
+      newTodoName.value = "";
+    }
+
+    function deleteCompleted(e) {
+      store.dispatch("deleteCompleted");
+    }
+
+    return {
+      all,
+      newTodoName,
+      addNewTodo,
+      getCompleted,
+      props,
+    };
+  },
+});
+</script>

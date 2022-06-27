@@ -26,12 +26,12 @@ export default {
   name: "App",
 
   setup() {
-    // const store = useStore();
-    // const router = useRouter();
-    // onMounted(() => {
-    //   store.dispatch("getTodos");
-    // });
-    // const todos = computed(() => store.state.todos);
+    const store = useStore();
+
+    onMounted(() => {
+      store.dispatch("getTodos");
+    });
+    // const all = computed(() => store.state.todos);
 
     // function goToDetail(id) {
     //   router.push({ path: `/character/${id}` });

@@ -1,16 +1,15 @@
 <template>
-  <TodoList />
+  <TodoList :name1="'Active'" :name2="'Completed'" />
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 // Components
-import TodoList from '../components/TodoList.vue';
+import TodoList from "../components/TodoList.vue";
 
 export default defineComponent({
-  name: 'AllView',
-
+  name: "AllView",
   components: {
     TodoList,
   },

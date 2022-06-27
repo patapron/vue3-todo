@@ -3,52 +3,67 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     todos: [],
-    // character: {},
-    // cart: {},
+    idCounter: 0,
   },
   getters: {},
   mutations: {
     setTodos(state, payload) {
       state.todos = payload;
     },
-    // setCharacter(state, payload) {
-    //   state.character = payload;
-    // },
-    // setChariD(state, payload) {
-    //   state.charId = payload;
-    // },
-    // setCart(state, payload) {
-    //   state.cart[payload.id] = payload;
-    // },
+    counterIncrement(state) {
+      state.idCounter++;
+    },
   },
   actions: {
     getTodos: (state) => {
-      fetch(`https://rickandmortyapi.com/api/character`)
-        .then((res) => {
-          return res.json();
-        })
-        .then((response) => {
-          state.commit("setTodos", response);
-        });
+      // fetch(`https://todos.com/api/getTodos`)
+      //   .then((res) => {
+      //     return res.json();
+      //   })
+      //   .then((response) => {
+      //     state.commit("setTodos", response);
+      //   });
+      const response = [];
+      state.commit("setTodos", response);
+    },
+    addTodo({ commit, state }, todo) {
+      let tempTodo = [...state.todos];
+      todo.id = state.idCounter;
+      commit("counterIncrement");
+      tempTodo.push(todo);
+      commit("setTodos", tempTodo);
     },
 
-    // getCharacter: (state, payload) => {
-    //   fetch(`https://rickandmortyapi.com/api/character/${payload}`)
-    //     .then((res) => {
-    //       return res.json();
-    //     })
-    //     .then((response) => {
-    //       response.units = 0;
-    //       response.price = 10;
-    //       state.commit("setCharacter", response);
-    //     });
-    // },
+    changeTodo({ commit, state }, todo) {
+      let tempTodos = [...state.todos];
+      tempTodos.filter((element) => {
+        return element.id === todo.id;
+      })[0] = todo;
+      commit("setTodos", tempTodos);
+    },
 
-    // async init ({commit}) {
-    //   const response = await fetch('https://rickandmortyapi.com/api/character')
-    //   const data = await response.json()
-    //   commit("setCharacters", data.results);
-    // },
+    deleteTodo({ commit, state }, todo) {
+      let tempTodos = state.todos.filter((element) => {
+        return element.id !== todo.id;
+      });
+      commit("setTodos", tempTodos);
+    },
+
+    deleteCompleted({ commit, state }) {
+      let tempTodos = state.todos.filter((element) => {
+        return !element.completed;
+      });
+      commit("setTodos", tempTodos);
+    },
+  },
+  getters: {
+    getCompleted: (state) => (value) => {
+      let result = [];
+      if (state.todos.length) {
+        result = state.todos.filter((element) => element.completed === value);
+      }
+      return result;
+    },
   },
   modules: {},
 });

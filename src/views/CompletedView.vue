@@ -1,5 +1,5 @@
 <template>
-  <TodoList />
+  <TodoList :name2="'Completed'" :filterValue="true" />
 </template>
 
 <script>
