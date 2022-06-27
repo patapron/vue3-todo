@@ -16,7 +16,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   inheritAttrs: false,
-  name: "List",
+  name: "ListGroup",
   components: {
     ListItem,
   },

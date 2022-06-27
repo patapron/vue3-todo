@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List renders correctly 1`] = `
+<v-list-item-avatar start="">
+  <v-checkbox modelvalue="false" hide-details=""></v-checkbox>
+</v-list-item-avatar>
+<v-list-item-header>
+  <v-list-item-title>
+    <v-btn variant="flat">test</v-btn>
+  </v-list-item-title>
+</v-list-item-header>
+<v-list-item-avatar end="">
+  <v-btn variant="text" color="grey lighten-1" icon="mdi-close"></v-btn>
+</v-list-item-avatar>
+`;

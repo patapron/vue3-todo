@@ -18,6 +18,7 @@
         hide-details
         v-model="props.element.name"
         v-on:keyup.enter="changeEmit(props.element)"
+        @blur="changeEmit(props.element)"
       ></v-text-field>
     </v-list-item-title>
   </v-list-item-header>
@@ -47,7 +48,7 @@ export default {
 
     function changeEmit(event) {
       editToggle();
-      bus.emit("delete-event", event);
+      bus.emit("change-event", event);
     }
 
     function deleteEmit(event) {

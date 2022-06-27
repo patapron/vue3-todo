@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompletedView renders correctly 1`] = `<todo-list-stub name2="Completed" filtervalue="true"></todo-list-stub>`;

@@ -8,19 +8,19 @@
     ></v-text-field>
     <v-list>
       <!-- active -->
-      <List
+      <ListGroup
         v-if="name1"
         :list="getCompleted(false)"
         :name="props.name1"
         @change-event="changeTodo"
-      ></List>
+      ></ListGroup>
       <!-- completed -->
-      <List
+      <ListGroup
         v-if="name2"
         :list="getCompleted(true)"
         :name="props.name2"
         @change-event="changeTodo"
-      ></List>
+      ></ListGroup>
     </v-list>
   </v-card>
 </template>
@@ -29,13 +29,13 @@
 import { useStore } from "vuex";
 import { computed, ref, defineComponent, provide } from "vue";
 
-import List from "../components/List.vue";
+import ListGroup from "../components/ListGroup.vue";
 import mitt from "mitt";
 
 export default defineComponent({
   name: "TodoList",
   components: {
-    List,
+    ListGroup,
   },
   props: {
     filterValue: {
@@ -55,7 +55,7 @@ export default defineComponent({
       store.dispatch("deleteTodo", evt);
     });
     bus.on("change-event", (evt) => {
-      store.dispatch("changeTodo", e);
+      store.dispatch("changeTodo", evt);
     });
     provide("bus", bus);
 
@@ -63,10 +63,6 @@ export default defineComponent({
       let newTodo = { id: null, name: newTodoName.value, completed: false };
       store.dispatch("addTodo", newTodo);
       newTodoName.value = "";
-    }
-
-    function deleteCompleted(e) {
-      store.dispatch("deleteCompleted");
     }
 
     return {

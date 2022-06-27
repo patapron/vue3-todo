@@ -5,7 +5,6 @@ export default createStore({
     todos: [],
     idCounter: 0,
   },
-  getters: {},
   mutations: {
     setTodos(state, payload) {
       state.todos = payload;
@@ -36,9 +35,13 @@ export default createStore({
 
     changeTodo({ commit, state }, todo) {
       let tempTodos = [...state.todos];
-      tempTodos.filter((element) => {
-        return element.id === todo.id;
-      })[0] = todo;
+      tempTodos.forEach(element => {
+        if(element.id === todo.id){
+          element.name = todo.name
+          element.completed = todo.completed
+          return
+        }
+      });
       commit("setTodos", tempTodos);
     },
 
@@ -65,5 +68,4 @@ export default createStore({
       return result;
     },
   },
-  modules: {},
 });
