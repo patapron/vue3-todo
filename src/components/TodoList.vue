@@ -59,7 +59,7 @@ export default defineComponent({
     });
     provide("bus", bus);
 
-    function addNewTodo(e) {
+    function addNewTodo() {
       let newTodo = { id: null, name: newTodoName.value, completed: false };
       store.dispatch("addTodo", newTodo);
       newTodoName.value = "";
